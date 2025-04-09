@@ -38,7 +38,10 @@ class MSPBillingAPI:
         code = response.status_code
         
         if code == 200: # Success
-            return response.json()[endpoint]
+            try:
+                return response.json()[endpoint]
+            except KeyError:
+                return response.json()
         
         elif code == 400: # Bad request
             raise req_exc.RequestException("Error 400: Bad Request.  Make sure your variables are correct.")
